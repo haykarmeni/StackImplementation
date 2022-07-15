@@ -1,0 +1,3 @@
+C:/Users/haykm/CLionProjects/StackImplementation/cmake-build-debug/CMakeFiles/StackImplementation.dir
+C:/Users/haykm/CLionProjects/StackImplementation/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/haykm/CLionProjects/StackImplementation/cmake-build-debug/CMakeFiles/rebuild_cache.dir
