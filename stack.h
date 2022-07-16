@@ -118,6 +118,13 @@ namespace own
             }
             return this->m_ptr[this->m_size - 1];
         }
+        void pop() {
+            if(empty()) {
+                throw std::underflow_error("Pop from empty stack");
+            }
+            --(this->m_size);
+            destroy(this->mptr + this->m_size);
+        }
     private:
         constexpr bool full() const noexcept {
             return this->m_size == this->m_capacity;
