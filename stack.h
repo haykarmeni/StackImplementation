@@ -32,7 +32,7 @@ namespace own
 
     template<typename T>
     class StackImpl {
-    protected:
+    public:
         StackImpl(std::size_t capacity = 0) : m_ptr {static_cast<T*>
                                                      ( !capacity ?
                                                        nullptr :
@@ -51,8 +51,7 @@ namespace own
             std::swap(m_capacity, other.m_capacity);
             std::swap(m_size, other.m_size);
         }
-
-    protected:
+    public:
         T* m_ptr;
         std::size_t m_capacity;
         std::size_t m_size;
@@ -63,7 +62,7 @@ namespace own
     };
 
     template<typename T>
-    class Stack : private StackImpl<T> {
+    class Stack {
     public:
         Stack(std::size_t size = 0) : m_impl(size)
         {}
@@ -124,7 +123,7 @@ namespace own
                 throw std::underflow_error("Pop from empty stack");
             }
             --m_impl.m_size;
-            destroy(m_impl.mptr + m_impl.m_size);
+            destroy(m_impl.m_ptr + m_impl.m_size);
         }
     private:
         constexpr bool full() const noexcept {
