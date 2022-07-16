@@ -65,43 +65,44 @@ namespace own
     template<typename T>
     class Stack : private StackImpl<T> {
     public:
-        Stack(std::size_t size = 0) : StackImpl<T>(size)
+        Stack(std::size_t size = 0) : m_impl(size)
         {}
 
         ~Stack()
         {}
 
-        Stack(const Stack<T>& rhs) : StackImpl<T>(rhs.m_size) {
-            while(this->m_size < rhs.m_size) {
-                own::construct(this->m_ptr + this->m_size, rhs.m_ptr[this->m_size]);
-                ++(this->m_size);
+        Stack(const Stack<T>& rhs) : m_impl(rhs.m_size) {
+            while(m_impl.m_size < rhs.m_size) {
+                own::construct(m_impl.m_ptr + m_impl.m_size, rhs.m_ptr[m_impl.m_size]);
+                ++m_impl.m_size;
             }
         }
 
         Stack<T>& operator=(Stack<T> rhs) {
-            swap(rhs);
+            Stack<T> tmp{ rhs };
+            m_impl.swap(tmp.m_impl);
             return *this;
         }
 
         constexpr size_t size() const noexcept {
-            return this->m_size;
+            return m_impl.m_size;
         }
 
         constexpr bool empty() const noexcept {
-            return this->m_size == 0;
+            return m_impl.m_size == 0;
         }
 
         void push(const T& val) {
             if(full()) {
-                Stack<T> tmpStack(2*this->m_size + 1);
-                while(tmpStack.size() < this->m_size) {
-                    tmpStack.push(this->m_ptr[tmpStack.size()]);
+                Stack<T> tmpStack(2*m_impl.m_size + 1);
+                while(tmpStack.size() < m_impl.m_size) {
+                    tmpStack.push(m_impl.m_ptr[tmpStack.size()]);
                 }
                 tmpStack.push(val);
-                swap(tmpStack);
+                m_impl.swap(tmpStack);
             }
             else {
-                construct(this->m_ptr[this->m_size++], val);
+                construct(m_impl.m_ptr[m_impl.m_size++], val);
             }
         }
 
@@ -109,26 +110,28 @@ namespace own
             if(empty()) {
                 throw std::logic_error("Empty stack!");
             }
-            return this->m_ptr[this->m_size - 1];
+            return m_impl.m_ptr[m_impl.m_size - 1];
         }
 
         const T& top() const {
             if(empty()) {
                 throw std::logic_error("Empty stack!");
             }
-            return this->m_ptr[this->m_size - 1];
+            return m_impl.m_ptr[m_impl.m_size - 1];
         }
         void pop() {
             if(empty()) {
                 throw std::underflow_error("Pop from empty stack");
             }
-            --(this->m_size);
-            destroy(this->mptr + this->m_size);
+            --m_impl.m_size;
+            destroy(m_impl.mptr + m_impl.m_size);
         }
     private:
         constexpr bool full() const noexcept {
-            return this->m_size == this->m_capacity;
+            return m_impl.m_size == m_impl.m_capacity;
         }
+    private:
+        StackImpl<T> m_impl;
     };
 }
 
