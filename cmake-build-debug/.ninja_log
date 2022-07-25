@@ -13,3 +13,5 @@
 2386	2682	6802737247841419	lib/libgmock.a	20516157fb81d073
 2682	2734	6802737248466283	lib/libgmock_main.a	85deb4fd094b8c33
 4	1230	6802874443584782	CMakeFiles/StackImplementation.dir/EmptyStack.cpp.obj	99946fabc0a19516
+5	1663	6804774392209234	CMakeFiles/StackImplementation.dir/main.cpp.obj	84476a340f1e8d14
+1664	4996	6804774425470791	StackImplementation.exe	e46e0a3ab770e802
