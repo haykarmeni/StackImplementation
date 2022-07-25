@@ -1,6 +1,3 @@
-//
-// Created by haykm on 16-Jul-22.
-//
 #ifndef __STACK_H__
 #define __STACK_H__
 
